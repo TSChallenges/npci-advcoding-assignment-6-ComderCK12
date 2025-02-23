@@ -1,18 +1,21 @@
 package com.mystore.app;
 
-class Product {
-    
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Product {
     private int id;
     private String name;
     private String barcode;
 
-    Barcode barCoder = new Barcode();
+    private final Barcode barcodeGenerator;
 
-    public Product() {
-        System.out.println("In Product constructor");
+    @Autowired
+    public Product(Barcode barcodeGenerator) {
+        this.barcodeGenerator = barcodeGenerator;
     }
 
-    // Getter methods
     public int getId() {
         return id;
     }
@@ -21,11 +24,6 @@ class Product {
         return name;
     }
 
-    public String getBarcode() {
-        return barcode;
-    }
-
-    // Setter methods
     public void setId(int id) {
         this.id = id;
     }
@@ -34,13 +32,8 @@ class Product {
         this.name = name;
     }
 
-    public void setBarcode() {
-        this.barcode = barCoder.createBarcode(this);
-    }
-
     @Override
     public String toString() {
         return "Product{id=" + id + ", name='" + name + "', barcode='" + barcode + "'}";
     }
-
 }

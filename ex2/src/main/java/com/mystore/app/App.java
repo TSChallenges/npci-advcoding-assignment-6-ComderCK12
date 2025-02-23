@@ -1,16 +1,20 @@
 package com.mystore.app;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 public class App {
     public static void main(String[] arg) {
-        
-        Product p1 = new Product();
-        p1.setId(1);
-        p1.setName("Tumbler");
-        System.out.println(p1);
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        context.scan("com.mystore.app");
+        // context.refresh();
 
-        Product p2 = new Product();
-        p2.setId(2);
-        p2.setName("Bucket");        
-        System.out.println(p2);
-    }  
+        Product product1 = context.getBean("tumblerProduct", Product.class);
+        Product product2 = context.getBean("bucketProduct", Product.class);
+
+        System.out.println(product1);
+        System.out.println(product2);
+
+        context.close();
+    }
 }
